@@ -3,4 +3,5 @@
     <string name="loginPref">loginPref</string>
     <string name="login">Login</string>
     <string name="logout">LOGOUT</string>
+    <string name="show_cities">Show cities</string>
 </resources>

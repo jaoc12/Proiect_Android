@@ -3,7 +3,6 @@ package ro.example.proiect;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,7 +18,7 @@ import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 
-public class Login extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedPref;
     SharedPreferences.Editor sharedPrefEditor;
     EditText edtUserName, edtPassword;
@@ -35,7 +34,7 @@ public class Login extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login);
+        setContentView(R.layout.activity_login);
 
         gso = new GoogleSignInOptions
                 .Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
@@ -85,7 +84,7 @@ public class Login extends AppCompatActivity {
             sharedPrefEditor.putString("userName", "Google");
             sharedPrefEditor.apply();
 
-            Intent i = new Intent(Login.this, MainActivity.class);
+            Intent i = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(i);
             finish();
         }
@@ -124,7 +123,7 @@ public class Login extends AppCompatActivity {
             sharedPrefEditor.putString("loginMode", "google");
             sharedPrefEditor.apply();
 
-            Intent i = new Intent(Login.this, MainActivity.class);
+            Intent i = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(i);
             finish();
         } catch (ApiException e) {
@@ -146,7 +145,7 @@ public class Login extends AppCompatActivity {
                 sharedPrefEditor.putString("loginMode", "custom");
                 sharedPrefEditor.apply();
 
-                Intent i = new Intent(Login.this, MainActivity.class);
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
                 finish();
             } else

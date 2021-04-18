@@ -5,12 +5,6 @@
     android:layout_height="match_parent"
     android:orientation="horizontal">
 
-    <!--<androidx.fragment.app.FragmentContainerView
-        android:id="@+id/fragment_container"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:name="ro.example.proiect.FirstFragment"/>-->
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,6 +28,16 @@
             android:layout_margin="5dp"
             android:background="#D32F2F"
             android:text="@string/logout"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btnShowCities"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="#D32F2F"
+            android:text="@string/show_cities"
             android:textColor="#fff" />
 
     </LinearLayout>

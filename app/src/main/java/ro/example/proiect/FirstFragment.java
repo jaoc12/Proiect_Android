@@ -12,8 +12,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FirstFragment extends Fragment {
-    public static List<CityModel> citiesList = new ArrayList<>();
+import ro.example.proiect.database.CityModel;
+import ro.example.proiect.database.CityOperations;
+import ro.example.proiect.database.GetCitiesOperation;
+
+public class FirstFragment extends Fragment implements CityOperations {
+    public List<CityModel> citiesList = new ArrayList<>();
+    RecyclerView rv;
 
     public FirstFragment() {
         super(R.layout.fragment_first);
@@ -23,21 +28,19 @@ public class FirstFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        initializeCitiesList();
-
-        CitiesAdapter adapter = new CitiesAdapter(citiesList);
-        RecyclerView rv = view.findViewById(R.id.rvCities);
-        rv.setAdapter(adapter);
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
+        rv = view.findViewById(R.id.rvCities);
+        new GetCitiesOperation(this).execute();
     }
 
-    private void initializeCitiesList() {
-        citiesList.add(new CityModel(
-                "Bucuresti",
-                "Romania"));
+    @Override
+    public void insertCities(String result) { }
 
-        citiesList.add(new CityModel(
-                "Paris",
-                "Franta"));
+    @Override
+    public void getCities(List<CityModel> citiesList) {
+        this.citiesList = citiesList;
+
+        CitiesAdapter adapter = new CitiesAdapter(citiesList);
+        rv.setAdapter(adapter);
+        rv.setLayoutManager(new LinearLayoutManager(getContext()));
     }
 }
