@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="ro.example.proiect">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:name=".database.AppApplication"
         android:allowBackup="true"
@@ -10,7 +12,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Proiect">
-        <activity android:name=".MainActivity">
+        <activity android:name=".activity.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,8 +20,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".LoginActivity" />
-        <activity android:name=".CitiesActivity" />
+        <activity android:name=".activity.LoginActivity" />
+        <activity android:name=".activity.CitiesActivity" />
+        <activity android:name=".activity.LandmarkActivity" />
     </application>
 
 </manifest>

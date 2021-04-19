@@ -1,4 +1,4 @@
-package ro.example.proiect;
+package ro.example.proiect.recyclerview;
 
 import android.os.Bundle;
 import android.view.View;
@@ -13,9 +13,11 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import ro.example.proiect.R;
 import ro.example.proiect.database.CityModel;
 import ro.example.proiect.database.CityOperations;
 import ro.example.proiect.database.GetCitiesOperation;
+import ro.example.proiect.recyclerview.CitiesAdapter;
 
 public class FirstFragment extends Fragment implements CityOperations {
     public List<CityModel> citiesList = new ArrayList<>();

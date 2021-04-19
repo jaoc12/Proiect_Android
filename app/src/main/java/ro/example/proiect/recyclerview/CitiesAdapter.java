@@ -1,11 +1,14 @@
-package ro.example.proiect;
+package ro.example.proiect.recyclerview;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+import ro.example.proiect.R;
+import ro.example.proiect.activity.LandmarkActivity;
 import ro.example.proiect.database.CityModel;
 
 public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.CityViewHolder> {
@@ -27,6 +32,7 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.CityViewHo
         public TextView nameTextView;
         public TextView countryTextView;
         public ImageView imageView;
+        public Button button;
         Resources res;
         Context context;
 
@@ -36,6 +42,7 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.CityViewHo
             nameTextView = (TextView) itemView.findViewById(R.id.city_name);
             countryTextView = (TextView) itemView.findViewById(R.id.city_country);
             imageView = (ImageView) itemView.findViewById(R.id.city_image);
+            button = (Button) itemView.findViewById(R.id.btnCityBooking);
             res = itemView.getResources();
             context = itemView.getContext();
         }
@@ -48,6 +55,13 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.CityViewHo
             int id = res.getIdentifier(uri, null, context.getPackageName());
             Drawable drawable = res.getDrawable(id, context.getTheme());
             imageView.setImageDrawable(drawable);
+
+            button.setOnClickListener(v -> {
+                Intent i = new Intent(context, LandmarkActivity.class);
+                i.putExtra("CityName", cityModel.getName());
+                context.startActivity(i);
+                ((Activity)context).finish();
+            });
         }
     }
 

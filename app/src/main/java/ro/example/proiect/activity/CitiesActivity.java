@@ -1,4 +1,4 @@
-package ro.example.proiect;
+package ro.example.proiect.activity;
 
 import android.os.Bundle;
 import android.view.View;

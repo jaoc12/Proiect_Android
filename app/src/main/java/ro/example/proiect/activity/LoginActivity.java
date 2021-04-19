@@ -1,4 +1,4 @@
-package ro.example.proiect;
+package ro.example.proiect.activity;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -17,6 +17,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.SignInButton;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
+
+import ro.example.proiect.R;
 
 public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedPref;
