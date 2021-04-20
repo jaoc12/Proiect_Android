@@ -30,7 +30,6 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.CityViewHo
 
     public class CityViewHolder extends RecyclerView.ViewHolder{
         public TextView nameTextView;
-        public TextView countryTextView;
         public ImageView imageView;
         public Button button;
         Resources res;
@@ -40,7 +39,6 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.CityViewHo
             super(itemView);
 
             nameTextView = (TextView) itemView.findViewById(R.id.city_name);
-            countryTextView = (TextView) itemView.findViewById(R.id.city_country);
             imageView = (ImageView) itemView.findViewById(R.id.city_image);
             button = (Button) itemView.findViewById(R.id.btnCityBooking);
             res = itemView.getResources();
@@ -49,7 +47,6 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.CityViewHo
 
         public void bind(CityModel cityModel) {
             nameTextView.setText(cityModel.getName());
-            countryTextView.setText(cityModel.getCountry());
 
             String uri = "@drawable/"+cityModel.getName().toLowerCase();
             int id = res.getIdentifier(uri, null, context.getPackageName());
@@ -60,7 +57,6 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.CityViewHo
                 Intent i = new Intent(context, LandmarkActivity.class);
                 i.putExtra("CityName", cityModel.getName());
                 context.startActivity(i);
-                ((Activity)context).finish();
             });
         }
     }

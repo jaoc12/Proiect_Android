@@ -21,16 +21,6 @@
             android:layout_gravity="center"/>
 
         <Button
-            android:id="@+id/btnLogOut"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_margin="5dp"
-            android:background="#D32F2F"
-            android:text="@string/logout"
-            android:textColor="#fff" />
-
-        <Button
             android:id="@+id/btnShowCities"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -38,6 +28,16 @@
             android:layout_margin="5dp"
             android:background="#D32F2F"
             android:text="@string/show_cities"
+            android:textColor="#fff" />
+
+        <Button
+            android:id="@+id/btnLogOut"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="5dp"
+            android:background="#D32F2F"
+            android:text="@string/logout"
             android:textColor="#fff" />
 
     </LinearLayout>

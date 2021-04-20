@@ -66,7 +66,6 @@ public class MainActivity extends AppCompatActivity {
         btnShowCities.setOnClickListener(v -> {
             Intent i = new Intent(MainActivity.this, CitiesActivity.class);
             startActivity(i);
-            finish();
         });
     }
 
@@ -136,7 +135,6 @@ public class MainActivity extends AppCompatActivity {
 
                     Intent i = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(i);
-                    finish();
                     // [END_EXCLUDE]
                 });
     }
@@ -156,7 +154,6 @@ public class MainActivity extends AppCompatActivity {
         {
             Intent i = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(i);
-            finish();
         }
     }
 }

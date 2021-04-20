@@ -9,6 +9,7 @@ public class CityModel {
     public int id;
     public String Name;
     public String Country;
+    public String Description;
 
     public CityModel(){
     }
@@ -18,7 +19,14 @@ public class CityModel {
         Country = country;
     }
 
-    public CityModel(int id,String name, String country) {
+    public CityModel(int id, String name, String country, String description) {
+        this.id = id;
+        Name = name;
+        Country = country;
+        Description = description;
+    }
+
+    public CityModel(int id, String name, String country) {
         this.id = id;
         Name = name;
         Country = country;

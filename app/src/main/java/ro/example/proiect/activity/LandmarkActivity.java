@@ -1,14 +1,16 @@
 package ro.example.proiect.activity;
 
 import android.content.Context;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,20 +27,28 @@ import ro.example.proiect.database.GetCitiesOperation;
 
 public class LandmarkActivity extends AppCompatActivity implements CityOperations {
 
-    TextView textView;
+    TextView textCity;
     Context landmarkContext;
     public List<CityModel> citiesList = new ArrayList<>();
     String cityName;
+    LinearLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_landmark);
-        landmarkContext = this.getApplicationContext();
 
-        textView = (TextView) findViewById(R.id.txtCity);
+        layout = (LinearLayout) findViewById(R.id.layoutLandmark);
+        landmarkContext = this.getApplicationContext();
+        textCity = (TextView) findViewById(R.id.txtCity);
+
         cityName = getIntent().getExtras().getString("CityName");
-        textView.setText(cityName);
+        textCity.setText(cityName);
+
+        /*String uri = "@drawable/"+cityName.toLowerCase();
+        int id = getResources().getIdentifier(uri, null, this.getPackageName());
+        layout.setBackgroundResource(id);*/
+
         new GetCitiesOperation(this).execute();
 
         Call<GetLocationModel> call =
@@ -58,7 +68,7 @@ public class LandmarkActivity extends AppCompatActivity implements CityOperation
             }
             @Override
             public void onFailure(Call<GetLocationModel> call, Throwable t) {
-                textView.setText("Failure");
+                textCity.setText("Failure");
             }
         });
 
@@ -90,12 +100,15 @@ public class LandmarkActivity extends AppCompatActivity implements CityOperation
                 .filter(cityModel -> cityModel.getName().equals(cityName))
                 .findFirst();
 
-        TextView detailsView = (TextView) findViewById(R.id.txtDetails);
+        TextView textDetails = (TextView) findViewById(R.id.txtDetails);
+        TextView textCountry = (TextView) findViewById(R.id.txtCountry);
+
         if(city.isPresent()) {
-            detailsView.setText(city.get().Country);
+            textCountry.setText(city.get().Country);
+            textDetails.setText(city.get().Description);
         }
         else{
-            detailsView.setText("Failure");
+            textDetails.setText("Failure");
         }
     }
 }
