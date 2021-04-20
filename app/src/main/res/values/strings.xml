@@ -5,4 +5,6 @@
     <string name="logout">LOGOUT</string>
     <string name="show_cities">Show cities</string>
     <string name="book_hotels">Book hotels</string>
+    <string name="landmarks">Landmarks:</string>
+    <string name="see_details">See details</string>
 </resources>

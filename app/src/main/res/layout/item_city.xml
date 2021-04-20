@@ -35,7 +35,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:background="#D32F2F"
-    android:text="@string/book_hotels"
+    android:text="@string/see_details"
     android:textColor="#fff" />
 
 </LinearLayout>

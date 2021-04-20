@@ -17,14 +17,4 @@ public interface ApiService {
             @Query("query") String query,
             @Query("locale") String locale
     );
-
-    @GET("properties/list")
-    Call<GetLocationModel> getHotels(
-            @Query("destinationId") String destinationId,
-            @Query("pageNumber") String pageNumber,
-            @Query("checkIn") String checkIn,
-            @Query("checkOut") String checkOut,
-            @Query("pageSize") String pageSize,
-            @Query("adults1") String adults1
-    );
 }
