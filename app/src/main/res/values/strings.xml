@@ -7,4 +7,8 @@
     <string name="book_hotels">Book hotels</string>
     <string name="landmarks">Landmarks:</string>
     <string name="see_details">See details</string>
+    <string name="channel_name">Notificari</string>
+    <string name="register">Register</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="enter_your_password">Enter your Password</string>
 </resources>

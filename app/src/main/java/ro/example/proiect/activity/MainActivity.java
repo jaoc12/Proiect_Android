@@ -1,9 +1,15 @@
 package ro.example.proiect.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
+import androidx.core.app.NotificationManagerCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
@@ -16,6 +22,9 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import ro.example.proiect.R;
 
 public class MainActivity extends AppCompatActivity {
+
+    private static final String CHANNEL_ID = "Canal notificare";
+    static int notificationId = 5;
 
     TextView txtInfo;
     Button btnLogout;
@@ -41,6 +50,8 @@ public class MainActivity extends AppCompatActivity {
 
         checkLogin();
 
+        setNotification();
+
         btnLogout.setOnClickListener(v -> {
             if(loginMode.equals("google")) {
                 googleLogout();
@@ -57,6 +68,35 @@ public class MainActivity extends AppCompatActivity {
             startActivity(i);
             finish();
         });
+    }
+
+    private void setNotification() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            CharSequence name = getString(R.string.channel_name);
+            int importance = NotificationManager.IMPORTANCE_DEFAULT;
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name,
+                    importance);
+            NotificationManager notificationManager = getSystemService(NotificationManager.class);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        Intent intent = new Intent(this, CitiesActivity.class);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
+
+        NotificationCompat.Builder builder =
+                new NotificationCompat.Builder(this, CHANNEL_ID)
+                        .setSmallIcon(R.drawable.ic_launcher_foreground)
+                        .setContentTitle("See new cities")
+                        .setContentText("Why not discover your new favourite city?")
+                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+                        .setContentIntent(pendingIntent)
+                        .setAutoCancel(true);
+
+        NotificationManagerCompat notificationManager =
+                NotificationManagerCompat.from(this);
+
+        // notificationId is a unique int for each notification that you must define
+        notificationManager.notify(notificationId, builder.build());
     }
 
     private void logout() {

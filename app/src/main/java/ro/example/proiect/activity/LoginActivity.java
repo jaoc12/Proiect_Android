@@ -23,10 +23,14 @@ import ro.example.proiect.R;
 public class LoginActivity extends AppCompatActivity {
     SharedPreferences sharedPref;
     SharedPreferences.Editor sharedPrefEditor;
+
     EditText edtUserName, edtPassword;
-    Button btnLogin;
-    SignInButton btnGoogleLogin;
     TextView txtInfo;
+
+    Button btnLogin;
+    Button btnRegister;
+
+    SignInButton btnGoogleLogin;
     GoogleSignInOptions gso;
     GoogleSignInClient googleSignInClient;
 
@@ -48,29 +52,26 @@ public class LoginActivity extends AppCompatActivity {
         edtPassword = findViewById(R.id.edtPassword);
         edtUserName.setText("");
         edtPassword.setText("");
+
         btnLogin = findViewById(R.id.btnLogin);
+        btnRegister = findViewById(R.id.btnRegister);
         btnGoogleLogin = findViewById(R.id.sign_in_button);
+
         txtInfo = findViewById(R.id.txtInfo);
         sharedPref = getSharedPreferences(getString(R.string.loginPref), MODE_PRIVATE);
 
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (edtUserName.getText().toString().equals("")
-                        || edtPassword.getText().toString().equals("")) {
-                    txtInfo.setText("Please insert username and password");
-                }
-                else
-                    DoLogin(edtUserName.getText().toString(), edtPassword.getText().toString());
+        btnLogin.setOnClickListener(v -> {
+            if (edtUserName.getText().toString().equals("")
+                    || edtPassword.getText().toString().equals("")) {
+                txtInfo.setText("Please insert username and password");
             }
+            else
+                doLogin(edtUserName.getText().toString(), edtPassword.getText().toString());
         });
 
-        btnGoogleLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                googleSignIn();
-            }
-        });
+        btnRegister.setOnClickListener(v -> doRegister());
+
+        btnGoogleLogin.setOnClickListener(v -> googleSignIn());
     }
 
     @Override
@@ -83,7 +84,7 @@ public class LoginActivity extends AppCompatActivity {
                 sharedPref = getSharedPreferences(getString(R.string.loginPref), MODE_PRIVATE);
 
             sharedPrefEditor = sharedPref.edit();
-            sharedPrefEditor.putString("userName", "Google");
+            sharedPrefEditor.putString("userName", account.getDisplayName());
             sharedPrefEditor.apply();
 
             Intent i = new Intent(LoginActivity.this, MainActivity.class);
@@ -135,15 +136,17 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    private void DoLogin(String username, String password) {
+    private void doLogin(String username, String password) {
         try {
-            if (password.equals("Test")) {
+            if (sharedPref == null)
+                sharedPref = getSharedPreferences(getString(R.string.loginPref), MODE_PRIVATE);
+            String loginPassword = sharedPref.getString("password", "");
+            String loginUsername = sharedPref.getString("userName", "");
 
-                if (sharedPref == null)
-                    sharedPref = getSharedPreferences(getString(R.string.loginPref), MODE_PRIVATE);
+            if (password.equals(loginPassword) && !password.equals("")
+            && username.equals(loginUsername) && !username.equals("")) {
 
                 sharedPrefEditor = sharedPref.edit();
-                sharedPrefEditor.putString("userName", username);
                 sharedPrefEditor.putString("loginMode", "custom");
                 sharedPrefEditor.apply();
 
@@ -155,5 +158,23 @@ public class LoginActivity extends AppCompatActivity {
         } catch (Exception ex) {
             txtInfo.setText(ex.getMessage());
         }
+    }
+
+    private void doRegister() {
+        String username = edtUserName.getText().toString();
+        String password = edtPassword.getText().toString();
+
+        if (sharedPref == null)
+            sharedPref = getSharedPreferences(getString(R.string.loginPref), MODE_PRIVATE);
+
+        sharedPrefEditor = sharedPref.edit();
+        sharedPrefEditor.putString("userName", username);
+        sharedPrefEditor.putString("password", password);
+        sharedPrefEditor.putString("loginMode", "custom");
+        sharedPrefEditor.apply();
+
+        Intent i = new Intent(LoginActivity.this, MainActivity.class);
+        startActivity(i);
+        finish();
     }
 }
