@@ -3,6 +3,9 @@ package ro.example.proiect.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -19,12 +22,12 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
+import java.util.concurrent.TimeUnit;
+
+import ro.example.proiect.NotificationWorker;
 import ro.example.proiect.R;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final String CHANNEL_ID = "Canal notificare";
-    static int notificationId = 5;
 
     TextView txtInfo;
     Button btnLogout;
@@ -50,7 +53,11 @@ public class MainActivity extends AppCompatActivity {
 
         checkLogin();
 
-        setNotification();
+        WorkRequest uploadWorkRequest =
+                new OneTimeWorkRequest.Builder(NotificationWorker.class)
+                        .setInitialDelay(1, TimeUnit.MINUTES)
+                        .build();
+        WorkManager.getInstance(this).enqueue(uploadWorkRequest);
 
         btnLogout.setOnClickListener(v -> {
             if(loginMode.equals("google")) {
@@ -67,35 +74,6 @@ public class MainActivity extends AppCompatActivity {
             Intent i = new Intent(MainActivity.this, CitiesActivity.class);
             startActivity(i);
         });
-    }
-
-    private void setNotification() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = getString(R.string.channel_name);
-            int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name,
-                    importance);
-            NotificationManager notificationManager = getSystemService(NotificationManager.class);
-            notificationManager.createNotificationChannel(channel);
-        }
-
-        Intent intent = new Intent(this, CitiesActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, 0);
-
-        NotificationCompat.Builder builder =
-                new NotificationCompat.Builder(this, CHANNEL_ID)
-                        .setSmallIcon(R.drawable.ic_launcher_foreground)
-                        .setContentTitle("See new cities")
-                        .setContentText("Why not discover your new favourite city?")
-                        .setPriority(NotificationCompat.PRIORITY_DEFAULT)
-                        .setContentIntent(pendingIntent)
-                        .setAutoCancel(true);
-
-        NotificationManagerCompat notificationManager =
-                NotificationManagerCompat.from(this);
-
-        // notificationId is a unique int for each notification that you must define
-        notificationManager.notify(notificationId, builder.build());
     }
 
     private void logout() {

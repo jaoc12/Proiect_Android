@@ -47,9 +47,11 @@ public class CitiesAdapter extends RecyclerView.Adapter<CitiesAdapter.CityViewHo
 
         public void bind(CityModel cityModel) {
             nameTextView.setText(cityModel.getName());
-
-            String uri = "@drawable/"+cityModel.getName().toLowerCase();
+            String uri = "@drawable/"+cityModel.getName()
+                    .replaceAll(" ", "_")
+                    .toLowerCase();
             int id = res.getIdentifier(uri, null, context.getPackageName());
+
             Drawable drawable = res.getDrawable(id, context.getTheme());
             imageView.setImageDrawable(drawable);
 
